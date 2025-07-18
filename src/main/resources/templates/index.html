@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="es">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" name="viewport" content="width=device-width, initial-scale=1.0, text/html">
+    <title>INMY STORE - Periféricos y accesorios</title>
+    <link rel="icon" type="image/png" th:href="@{/imagenes/head.png}">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Tu CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    
+</head>
+
+<body>
+    <!-- Top Navbar -->
+    <div class="top-navbar bg-primary py-2">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <p class="mb-0 text-white blink">Bienvenido a INMY! Periféricos y accesorios que marcan la diferencia</p>
+
+            <div class="other-link ms-auto">
+                <ul class="navbar-navtop list-unstyled d-flex align-items-center mb-0">
+
+                <!-- Navbar con nombre de usuario -->
+                <li class="nav-item dropdown" th:if="${usuario != null}">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#"
+                    id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-regular fa-user me-2"></i>
+                    <span th:text="${usuario.nombreUsuario}">Nombre Usuario</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="userDropdown">
+                        <li class="text-center">
+                        <a th:href="@{/logout}" class="btn btn-danger text-white w-100 mb-2">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item ms-3">
+                    <a class="nav-linktop text-white d-flex align-items-center" th:href="@{/carrito/ver}">
+                        <i class="fa-solid fa-cart-shopping me-1"></i> Carrito
+                    </a>
+                </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar Principal -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}" id="logo">
+                <span class="text-warning">INMY</span> STORE
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="productosDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Productos
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="productosDropdown">
+                <li>
+                  <a class="dropdown-item" href="/accesorios">Accesorios</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/audifonos">Audífonos</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/adaptadores"
+                    >Adaptadores y Conectores</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/almacenamiento"
+                    >Almacenamiento</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="/cables">Cables</a></li>
+                <li>
+                  <a class="dropdown-item" href="/camaras">Cámaras web</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/combosYkits">Combos y Kits</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/cooler">Cooler de Laptop</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/estabilizadores"
+                    >Estabilizadores</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="mousesDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Mouses
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="mousesDropdown">
+                <li>
+                  <a class="dropdown-item" href="/mouseGaming">Mouse Gaming</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/mouseOficina"
+                    >Mouse Oficina</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/accesoriosMouse"
+                    >Accesorios de Mouse</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="tecladosDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Teclados
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="tecladosDropdown">
+                <li>
+                  <a class="dropdown-item" href="/tecladosGaming"
+                    >Teclado Gaming</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/tecladosOficina"
+                    >Teclado Oficina</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/keycaps">Keycaps</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/switches">Switches</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/accesoriosTeclado"
+                    >Accesorios de Teclado</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="microfonosDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Micrófonos
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="microfonosDropdown">
+                <li>
+                  <a class="dropdown-item" href="/microfonos">Micrófonos</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/brazoDeMicrofono"
+                    >Brazo de micrófono</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/streaming">Streaming</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/liquidacion">Liquidación</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/sillasGamer">Sillas Gamer</a>
+            </li>
+          </ul>
+
+          <form class="d-flex ms-lg-3" id="search">
+            <div class="input-group">
+              <input
+                class="form-control rounded-start"
+                type="search"
+                placeholder="Buscar productos..."
+                aria-label="Search"
+              />
+              <button
+                class="btn btn-warning text-white rounded-end"
+                type="submit"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <!-- Banner Promoción -->
+        <section class="banner-promocion position-relative overflow-hidden">
+            <img th:src="@{/imagenes/BANNER2.webp}" alt="Banner">
+            alt="Promoción Gamer - Ofertas Exclusivas"
+            <class="img-fluid w-100 vh-100 object-fit-cover">
+
+            <div
+                class="banner-content position-absolute top-50 start-50 translate-middle text-center text-white w-100 px-3">
+                <h1 class="display-3 display-md-1 fw-bold">GRAN <span class="text-warning">PROMOCIÓN</span> GAMER</h1>
+                <p class="lead mb-3">OFERTAS EXCLUSIVAS PARA CLIENTES</p>
+                <div>
+                    <a href="" class="btn btn-warning btn-lg px-4 me-2 mb-2">MÁS INFORMACIÓN</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container my-5">
+            <div class="row g-4">
+                <!-- Micrófono -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                        <div class="card-img-container position-relative">
+                            <img th:src="@{/Img-Perifericos/HYPERXMICROFONO.webp}"
+                                class="card-img-top img-fluid product-bg" alt="Micrófono HyperX">
+                            <div class="image-overlay"></div>
+                        </div>
+                        <div class="card-body text-center p-4 position-absolute top-50 start-50 translate-middle z-1">
+                            <h3 class="card-title text-white mb-3">Micrófonos</h3>
+                            <p class="card-text text-light mb-4">Las mejores marcas</p>
+                            <a href="#" class="btn btn-light">
+                                Ver más <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gamepad -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                        <div class="card-img-container position-relative">
+                            <img th:src="@{/Img-Perifericos/mouseGAMER..jpg}" class="card-img-top img-fluid product-bg"
+                                alt="Gamepad profesional">
+                            <div class="image-overlay"></div>
+                        </div>
+                        <div class="card-body text-center p-4 position-absolute top-50 start-50 translate-middle z-1">
+                            <h3 class="card-title text-white mb-3"> Mouse</h3>
+                            <p class="card-text text-light mb-4">Máxima precisión</p>
+                            <a href="#" class="btn btn-light">
+                                Ver más <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Webcam -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                        <div class="card-img-container position-relative">
+                            <img th:src="@{/Img-Perifericos/CAMARAGAMER.webp}" class="card-img-top img-fluid product-bg"
+                                alt="Webcam HD">
+                            <div class="image-overlay"></div>
+                        </div>
+                        <div class="card-body text-center p-4 position-absolute top-50 start-50 translate-middle z-1">
+                            <h3 class="card-title text-white mb-3">Webcam</h3>
+                            <p class="card-text text-light mb-4">Grandes descuentos</p>
+                            <a href="#" class="btn btn-light">
+                                Ver más <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="brands-section py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4 h3 fw-bold text-primary">TRABAJAMOS CON </h2>
+                <div class="row g-4 justify-content-center">
+                    <!-- Cada marca -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/redragon-1_280x.avif}" alt="redragon-1_280x"
+                                class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/hyperx-1_280x.avif}" alt="" class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/razer-1_280x.avif}" alt="RAZER" class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/logitech-1_280x.avif}" alt="Logitech"
+                                class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/vsg_fe52a1ed-2232-4f46-adc5-3382a00e1ffc_280x.avif}" alt="VSG"
+                                class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/corsair-1_280x.avif}" alt="CORSAIR" class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/astro_eb65a5a9-2d02-4347-8a8e-415763cc1868_280x.avif}"
+                                alt="ASTRO" class="img-fluid brand-logo">
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="brand-card rounded-3 shadow-sm bg-white p-3">
+                            <img th:src="@{/IMG-MARCAS/t_dagger_02b11627-e2d4-4336-81b5-abfe492f112b_280x.avif}"
+                                alt="TE" class="img-fluid brand-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <h2 class="text-center mb-4 h3 fw-bold text-primary">TECLADOS DESTACADOS</h2>
+
+                <div class="row g-4" id="teclados-container">
+                </div>
+            </div>
+
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-dark text-white pt-5">
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill" fill="#343a40"></path>
+            </svg>
+        </div>
+
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <h3 class="h4 mb-4 text-warning">CONTACTO</h3>
+                    <div class="contact-info">
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-phone-alt me-3 text-warning"></i>
+                            <div>
+                                <h6 class="mb-0">Teléfono</h6>
+                                <a href="tel:+51959610812" class="text-white text-decoration-none">+51 959610812</a>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-envelope me-3 text-warning"></i>
+                            <div>
+                                <h6 class="mb-0">Email</h6>
+                                <a href="mailto:contacto@inmystore.com"
+                                    class="text-white text-decoration-none">contacto@inmystore.com</a>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <i class="fab fa-whatsapp me-3 text-warning"></i>
+                            <div>
+                                <h6 class="mb-0">WhatsApp</h6>
+                                <a href="https://wa.me/51959610812" target="_blank"
+                                    class="text-white text-decoration-none">Envíanos un mensaje</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="h4 mb-4 text-warning">SOBRE INMY STORE</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-chevron-right me-2 text-warning"></i>Nosotros</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-chevron-right me-2 text-warning"></i>Contacto</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-chevron-right me-2 text-warning"></i>Preguntas Frecuentes</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-chevron-right me-2 text-warning"></i>Libro de reclamaciones</a></li>
+                        <li><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-chevron-right me-2 text-warning"></i>Trabaja con nosotros</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="h4 mb-4 text-warning">AYUDA</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-truck me-2 text-warning"></i>Envíos y entregas</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-exchange-alt me-2 text-warning"></i>Devoluciones</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-lock me-2 text-warning"></i>Políticas de privacidad</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-file-alt me-2 text-warning"></i>Términos y condiciones</a></li>
+                        <li><a href="#" class="text-white text-decoration-none"><i
+                                    class="fas fa-question-circle me-2 text-warning"></i>Guía de compra</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="h4 mb-4 text-warning">REDES SOCIALES</h4>
+                    <p class="text-white">Síguenos para ofertas exclusivas y novedades tecnológicas.</p>
+
+                    <div class="social-links d-flex gap-3 mt-4">
+                        <a href="#"
+                            class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                            style="width: 40px; height: 40px;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"
+                            class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                            style="width: 40px; height: 40px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#"
+                            class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                            style="width: 40px; height: 40px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#"
+                            class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                            style="width: 40px; height: 40px;"><i class="fab fa-youtube"></i></a>
+                    </div>
+
+                    <div class="newsletter mt-4">
+                        <h6 class="h6 mb-3">Suscríbete a nuestro boletín</h6>
+                        <form class="d-flex">
+                            <input type="email" class="form-control rounded-0 rounded-start" placeholder="Tu email"
+                                required>
+                            <button type="submit" class="btn btn-warning text-white rounded-0 rounded-end"><i
+                                    class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <span class="text-warning">INMY STORE</span> - Todos los derechos reservados
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa mx-2 text-white"></i>
+                        <i class="fab fa-cc-mastercard mx-2 text-white"></i>
+                        <i class="fab fa-cc-paypal mx-2 text-white"></i>
+                        <i class="fab fa-cc-amex mx-2 text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>
+
+
+
+

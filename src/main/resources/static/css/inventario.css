@@ -1,0 +1,166 @@
+/* Estilos personalizados para la página de gestión de tareas */
+
+body {
+    background-color: #f0f2f5; /* Un color de fondo claro para la página */
+    font-family: 'Inter', sans-serif; /* Fuente genérica, puedes ajustar si usas Google Fonts */
+    color: #333; /* Color de texto base */
+}
+
+.top-navbar {
+  background: linear-gradient(90deg, #4e73df 0%, #224abe 100%);
+  /* Asegura que el texto dentro de la navbar superior sea visible */
+  color: white;
+}
+
+.top-navbar .blink {
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.navbar-navtop .nav-link {
+    color: white !important; /* Asegura que los enlaces de usuario sean blancos */
+}
+
+.navbar-navtop .dropdown-menu {
+    border-radius: 8px; /* Bordes redondeados para el dropdown */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+}
+
+.card-formulario {
+  max-width: 1000px;
+  margin: 2rem auto; /* Centra la tarjeta y le da margen */
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil para efecto 3D */
+  overflow: hidden; /* Asegura que los bordes redondeados del header se respeten */
+}
+
+.card-header {
+  background-color: #4e73df; /* Color azul primario */
+  color: white;
+  border-radius: 10px 10px 0 0 !important; /* Bordes redondeados solo arriba */
+  padding: 1rem 1.25rem; /* Espaciado interno */
+  font-weight: bold; /* Texto en negrita */
+  display: flex; /* Para alinear el icono y el texto */
+  align-items: center; /* Centra verticalmente */
+}
+
+.card-header h5 {
+    margin-bottom: 0; /* Elimina margen inferior del título */
+}
+
+.card-body {
+    padding: 1.5rem; /* Más padding para el cuerpo de la tarjeta */
+}
+
+.form-floating label {
+    color: #6c757d; /* Color gris para las etiquetas flotantes */
+}
+
+.form-control:focus {
+    border-color: #80bdff; /* Resalta el borde al enfocar */
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Sombra al enfocar */
+}
+
+.btn-guardar {
+  background-color: #4e73df; /* Color azul primario */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px; /* Bordes ligeramente redondeados */
+  border: none; /* Eliminar borde por defecto */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave */
+}
+
+.btn-guardar:hover {
+  background-color: #3a5ccc; /* Azul más oscuro al pasar el ratón */
+  color: white;
+  transform: translateY(-2px); /* Pequeño efecto de elevación */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra al hover */
+}
+
+.table {
+    margin-top: 1.5rem; /* Margen superior para la tabla */
+    border-radius: 8px; /* Bordes redondeados para la tabla */
+    overflow: hidden; /* Asegura que los bordes redondeados se respeten */
+}
+
+.table thead th {
+  background-color: #343a40; /* Fondo oscuro para el encabezado de la tabla */
+  color: white;
+  font-weight: 600;
+  vertical-align: middle; /* Centra verticalmente el texto del encabezado */
+}
+
+.table tbody tr td {
+    vertical-align: middle; /* Centra verticalmente el contenido de las celdas */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.03); /* Color de fila impar */
+}
+
+.badge-prioridad {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  color: white; /* Asegurar color de texto blanco para todos los badges */
+  display: inline-block; /* Para que el padding y border-radius se apliquen bien */
+}
+
+.badge-alta {
+  background-color: #e74a3b; /* Rojo */
+}
+
+.badge-media {
+  background-color: #f6c23e; /* Amarillo */
+  color: #000; /* Texto negro para contraste con amarillo */
+}
+
+.badge-baja {
+  background-color: #1cc88a; /* Verde */
+}
+
+.btn-warning {
+    background-color: #f6c23e !important; /* Sobrescribe el color de Bootstrap si es necesario */
+    border-color: #f6c23e !important;
+    color: #000 !important; /* Texto negro para el botón de editar */
+}
+.btn-warning:hover {
+    background-color: #e0b02e !important;
+    border-color: #e0b02e !important;
+}
+
+.btn-danger {
+    background-color: #e74a3b !important; /* Rojo */
+    border-color: #e74a3b !important;
+}
+.btn-danger:hover {
+    background-color: #d0392b !important;
+    border-color: #d0392b !important;
+}
+
+/* Estilos para los modales */
+.modal-header {
+    background-color: #4e73df;
+    color: white;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-footer .btn {
+    border-radius: 5px;
+}

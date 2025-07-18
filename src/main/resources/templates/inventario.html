@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>INMY STORE - Periféricos y accesorios</title>
+    <link rel="icon" type="image/png" th:href="@{/imagenes/head.png}" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <!-- Tus estilos CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/inventario.css}" />
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Top Navbar -->
+    <div class="top-navbar bg-primary py-2">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <p class="mb-0 text-white blink">
+          Bienvenido a INMY! Periféricos y accesorios que marcan la diferencia
+        </p>
+        <div class="other-link ms-auto">
+          <ul
+            class="navbar-navtop list-unstyled d-flex align-items-center mb-0"
+          >
+            <li class="nav-item dropdown" th:if="${usuario != null}">
+              <a
+                class="nav-link dropdown-toggle d-flex align-items-center text-white"
+                href="#"
+                id="userDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-regular fa-user me-2"></i>
+                <span th:text="${usuario.nombreUsuario}">Nombre Usuario</span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end p-3"
+                aria-labelledby="userDropdown"
+              >
+                <li class="text-center">
+                  <a
+                    th:href="@{/logout}"
+                    class="btn btn-danger text-white w-100 mb-2"
+                    >Cerrar Sesión</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <!-- Si no hay usuario autenticado, puedes mostrar un enlace de inicio de sesión -->
+            <li class="nav-item" th:if="${usuario == null}">
+              <a class="nav-link text-white" th:href="@{/login}">
+                <i class="fa-solid fa-right-to-bracket me-2"></i> Iniciar Sesión
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div id="contenidoPrincipal" class="container py-4">
+      <!-- Mensajes de éxito/error (si tu controlador los envía) -->
+      <div
+        th:if="${param.mensaje}"
+        class="alert alert-success alert-dismissible fade show mt-3"
+        role="alert"
+      >
+        <i class="fa fa-check-circle me-2"></i>
+        <span th:text="${param.mensaje}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div
+        th:if="${param.error}"
+        class="alert alert-danger alert-dismissible fade show mt-3"
+        role="alert"
+      >
+        <i class="fa fa-times-circle me-2"></i>
+        <span th:text="${param.error}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- Formulario para agregar tareas -->
+      <div class="card card-formulario shadow-sm mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="fas fa-box-open me-2"></i>Gestión de Tareas
+          </h5>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/tareas/add}" method="post" th:object="${tarea}">
+            <input type="hidden" th:field="*{id}" />
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    th:field="*{titulo}"
+                    class="form-control"
+                    placeholder="Título"
+                    required
+                  />
+                  <label for="titulo"
+                    ><i class="fas fa-tag me-1"></i>Título</label
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    th:field="*{descripcion}"
+                    class="form-control"
+                    placeholder="Descripción"
+                    required
+                  />
+                  <label for="descripcion"
+                    ><i class="fas fa-align-left me-1"></i>Descripción</label
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="date"
+                    th:field="*{fecha}"
+                    class="form-control"
+                    placeholder="Fecha"
+                    required
+                  />
+                  <label for="fecha"
+                    ><i class="fas fa-calendar-alt me-1"></i>Vencimiento</label
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <select th:field="*{prioridad}" class="form-select" required>
+                    <option value="">Prioridad</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Baja">Baja</option>
+                  </select>
+                  <label for="prioridad"
+                    ><i class="fas fa-exclamation-circle me-1"></i
+                    >Prioridad</label
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="number"
+                    th:field="*{stock}"
+                    class="form-control"
+                    placeholder="Stock"
+                    value="100"
+                    required
+                  />
+                  <label for="stock"
+                    ><i class="fas fa-layer-group me-1"></i>Stock</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-end">
+              <button type="submit" class="btn btn-guardar">
+                <i class="fas fa-save me-1"></i> Guardar Producto
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sección del botón de reporte - MOVIDA AQUÍ -->
+      <div class="card shadow-sm mt-4 mb-4">
+          <div class="card-body text-center">
+              <h5 class="card-title mb-3">
+                  <i class="fas fa-file-pdf me-2"></i>Generar Reportes
+              </h5>
+              <p class="card-text mb-3">Descarga un listado completo de todas las tareas de inventario en formato PDF.</p>
+              <a th:href="@{/tareas/reporte/descargar-pdf}" class="btn btn-primary btn-lg shadow-sm">
+                  <i class="fas fa-download me-2"></i>Descargar Reporte PDF
+              </a>
+          </div>
+      </div>
+
+      <!-- Mostrar lista de tareas -->
+      <div class="card shadow-sm mt-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-list me-2"></i>Lista de Tareas</h5>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Prioridad</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="tarea : ${tareas}">
+                <td th:text="${tarea.titulo}"></td>
+                <td th:text="${tarea.descripcion}"></td>
+                <td th:text="${tarea.fecha}"></td>
+                <td th:text="${tarea.prioridad}"></td>
+                <td th:text="${tarea.stock}"></td>
+                <td class="text-center">
+                  <a
+                    href="#"
+                    class="btn btn-warning btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editarModal"
+                    th:attr="data-id=${tarea.id}"
+                  >
+                    <i class="fas fa-edit"></i> Editar
+                  </a>
+                  <a
+                    href="#"
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmarEliminacionModal"
+                    th:attr="data-id=${tarea.id}"
+                  >
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Confirmación de Eliminación -->
+    <div
+      class="modal fade"
+      id="confirmarEliminacionModal"
+      tabindex="-1"
+      aria-labelledby="confirmarEliminacionModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmarEliminacionModalLabel">
+              Confirmar Eliminación
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            ¿Estás seguro de que deseas eliminar esta tarea?
+            <div th:if="${tareaEliminar != null}">
+              <p th:text="${tareaEliminar.titulo}"></p>
+              <p th:text="${tareaEliminar.descripcion}"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <form th:action="@{/tareas/confirmarEliminar}" method="post">
+              <input type="hidden" name="id" />
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Edición -->
+    <div
+      class="modal fade"
+      id="editarModal"
+      tabindex="-1"
+      aria-labelledby="editarModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editarModalLabel">Editar Tarea</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form th:action="@{/tareas/add}" method="post">
+              <input type="hidden" name="id" id="modalTareaId" />
+              <div class="mb-3">
+                <label for="modalTitulo" class="form-label">Título</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="titulo"
+                  id="modalTitulo"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="modalDescripcion" class="form-label"
+                  >Descripción</label
+                >
+                <textarea
+                  class="form-control"
+                  name="descripcion"
+                  id="modalDescripcion"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="modalFecha" class="form-label"
+                  >Fecha de Vencimiento</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  name="fecha"
+                  id="modalFecha"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="modalPrioridad" class="form-label">Prioridad</label>
+                <select
+                  name="prioridad"
+                  class="form-select"
+                  id="modalPrioridad"
+                >
+                  <option value="Alta">Alta</option>
+                  <option value="Media">Media</option>
+                  <option value="Baja">Baja</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="modalStock" class="form-label">Stock</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="stock"
+                  id="modalStock"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Guardar Cambios
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-dark text-white py-3 mt-auto">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <span class="text-warning">INMY STORE</span> - Todos los
+            derechos reservados
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Modal de Confirmación de Eliminación
+        var eliminarModal = document.getElementById(
+          "confirmarEliminacionModal"
+        );
+        if (eliminarModal) {
+          eliminarModal.addEventListener("show.bs.modal", function (event) {
+            var button = event.relatedTarget;
+            var tareaId = button.getAttribute("data-id");
+            var form = eliminarModal.querySelector("form");
+            form.querySelector('input[name="id"]').value = tareaId;
+          });
+        } else {
+          console.error(
+            "ERROR: Modal 'confirmarEliminacionModal' no encontrado."
+          );
+        }
+
+        // Modal de Edición
+        var editarModal = document.getElementById("editarModal");
+        if (editarModal) {
+          editarModal.addEventListener("show.bs.modal", function (event) {
+            var button = event.relatedTarget;
+            var tareaId = button.getAttribute("data-id");
+
+            fetch(`/tareas/edit/${tareaId}`)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(
+                    "Network response was not ok " + response.statusText
+                  );
+                }
+                return response.json();
+              })
+              .then((data) => {
+                document.getElementById("modalTareaId").value = data.id;
+                document.getElementById("modalTitulo").value = data.titulo;
+                document.getElementById("modalDescripcion").value =
+                  data.descripcion;
+                document.getElementById("modalFecha").value = data.fecha; // Asume que la fecha viene en formato YYYY-MM-DD
+                document.getElementById("modalPrioridad").value =
+                  data.prioridad;
+                document.getElementById("modalStock").value = data.stock;
+              })
+              .catch((error) =>
+                console.error("Error al cargar los datos de la tarea:", error)
+              );
+          });
+        } else {
+          console.error("ERROR: Modal 'editarModal' no encontrado.");
+        }
+      });
+    </script>
+  </body>
+</html>

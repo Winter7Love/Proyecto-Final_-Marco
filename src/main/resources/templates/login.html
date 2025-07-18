@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head lang="es">
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Type"
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, text/html"
+    />
+    <title>INMY STORE - Periféricos y accesorios</title>
+    <link rel="icon" type="image/png" th:href="@{/imagenes/head.png}" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/js/script.js}" />
+  </head>
+  <body>
+    <!-- Top Navbar -->
+    <div class="top-navbar bg-primary py-2">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <p class="mb-0 text-white blink">
+          Bienvenido a INMY! Periféricos y accesorios que marcan la diferencia
+        </p>
+
+        <div class="other-link ms-auto">
+          <ul
+            class="navbar-navtop list-unstyled d-flex align-items-center mb-0"
+          >
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle d-flex align-items-center text-white"
+                href="#"
+                id="userDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-regular fa-user me-2"></i> Ingresar
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end p-3"
+                aria-labelledby="userDropdown"
+              >
+                <li class="text-center">
+                  <a
+                    th:href="@{/login}"
+                    class="btn btn-warning text-white w-100 mb-2"
+                    >Iniciar Sesión</a
+                  >
+                </li>
+                <li class="text-center">
+                  <p class="mb-1 text-white">¿No tienes una cuenta?</p>
+                  <a th:href="@{/register}" class="text-primary">Regístrate</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar Principal -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}" id="logo">
+          <span class="text-warning">INMY</span> STORE
+        </a>
+
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- Aquí puedes agregar otros elementos de la navegación si es necesario -->
+          </ul>
+
+          <!-- Formulario de búsqueda alineado a la derecha -->
+          <form class="d-flex ms-auto" id="search">
+            <div class="input-group">
+              <input
+                class="form-control rounded-start"
+                type="search"
+                placeholder="Buscar productos..."
+                aria-label="Search"
+              />
+              <button
+                class="btn btn-warning text-white rounded-end"
+                type="submit"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!---Login-->
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div
+        class="bg-white p-5 rounded-5 text-secondary shadow"
+        style="width: 25rem"
+      >
+        <div class="text-center fs-1 fw-bold">Mi Cuenta</div>
+        <div class="text-center mt-4">
+          <p>Ingresa tu E-mail o Nombre de Usuario y contraseña</p>
+        </div>
+
+        <form action="/login" method="POST">
+          <!-- Campo Email/Nombre de Usuario -->
+          <div class="input-group mt-4">
+            <div class="input-group-text">
+              <i class="fa-solid fa-envelope" style="height: 1rem"></i>
+            </div>
+            <input
+              class="form-control bg-light"
+              type="text"
+              name="username"
+              placeholder="Email o Nombre de Usuario"
+              required
+            />
+          </div>
+
+          <!-- Campo Contraseña -->
+          <div class="input-group mt-3">
+            <div class="input-group-text">
+              <i
+                class="fa-solid fa-eye"
+                id="toggle-login-password"
+                style="height: 1rem; cursor: pointer"
+                onclick="toggleLoginPassword()"
+              ></i>
+            </div>
+            <input
+              id="login-password"
+              class="form-control bg-light"
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+
+          <!-- Mensaje de error (si existe) -->
+          <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Usuario o contraseña incorrectos.
+          </div>
+
+          <!-- Mensaje de registro exitoso (si existe) -->
+          <div
+            th:if="${param.registro_exitoso}"
+            class="alert alert-success"
+            role="alert"
+          >
+            ¡Registro exitoso! Por favor, inicia sesión.
+          </div>
+
+          <!-- Recordar y Recuperar -->
+          <div class="d-flex justify-content-around mt-3">
+            <div class="d-flex align-items-center gap-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="remember-me"
+              />
+              <div class="pt-1" style="font-size: 0.9rem">Recordarme</div>
+            </div>
+            <div class="forgot-text pt-1">
+              <a
+                href="#"
+                class="text-decoration-none fw-semibold fst-italic"
+                style="font-size: 0.9rem"
+              >
+                Recuperar Contraseña
+              </a>
+            </div>
+          </div>
+
+          <!-- Botón Ingresar -->
+          <button
+            type="submit"
+            class="btn btn-primary text-white w-100 mt-4 fw-semibold shadow-sm"
+          >
+            Ingresar
+          </button>
+        </form>
+
+        <!-- Crear cuenta -->
+        <div class="d-flex gap-1 justify-content-center mt-3">
+          <div>¿Nuevo Cliente?</div>
+          <a
+            th:href="@{/register}"
+            class="text-decoration-none fw-semibold"
+            id="crear-color"
+            >Crear Cuenta</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Script para mostrar/ocultar contraseña en login -->
+    <script>
+      function toggleLoginPassword() {
+        const passwordInput = document.getElementById("login-password");
+        passwordInput.type =
+          passwordInput.type === "password" ? "text" : "password";
+        const toggleIcon = document.getElementById("toggle-login-password");
+        toggleIcon.classList.toggle("fa-eye");
+        toggleIcon.classList.toggle("fa-eye-slash");
+      }
+    </script>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-dark text-white pt-5">
+      <div class="wave-divider">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            class="shape-fill"
+            fill="#343a40"
+          ></path>
+        </svg>
+      </div>
+
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <h3 class="h4 mb-4 text-warning">CONTACTO</h3>
+            <div class="contact-info">
+              <div class="d-flex mb-3">
+                <i class="fas fa-phone-alt me-3 text-warning"></i>
+                <div>
+                  <h6 class="mb-0">Teléfono</h6>
+                  <a
+                    href="tel:+51959610812"
+                    class="text-white text-decoration-none"
+                    >+51 959610812</a
+                  >
+                </div>
+              </div>
+              <div class="d-flex mb-3">
+                <i class="fas fa-envelope me-3 text-warning"></i>
+                <div>
+                  <h6 class="mb-0">Email</h6>
+                  <a
+                    href="mailto:contacto@inmystore.com"
+                    class="text-white text-decoration-none"
+                    >contacto@inmystore.com</a
+                  >
+                </div>
+              </div>
+              <div class="d-flex">
+                <i class="fab fa-whatsapp me-3 text-warning"></i>
+                <div>
+                  <h6 class="mb-0">WhatsApp</h6>
+                  <a
+                    href="https://wa.me/51959610812"
+                    target="_blank"
+                    class="text-white text-decoration-none"
+                    >Envíanos un mensaje</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <h4 class="h4 mb-4 text-warning">SOBRE INMY STORE</h4>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-chevron-right me-2 text-warning"></i
+                  >Nosotros</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-chevron-right me-2 text-warning"></i
+                  >Contacto</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-chevron-right me-2 text-warning"></i
+                  >Preguntas Frecuentes</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-chevron-right me-2 text-warning"></i>Libro
+                  de reclamaciones</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-chevron-right me-2 text-warning"></i>Trabaja
+                  con nosotros</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <h4 class="h4 mb-4 text-warning">AYUDA</h4>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-truck me-2 text-warning"></i>Envíos y
+                  entregas</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-exchange-alt me-2 text-warning"></i
+                  >Devoluciones</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-lock me-2 text-warning"></i>Políticas de
+                  privacidad</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-file-alt me-2 text-warning"></i>Términos y
+                  condiciones</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-white text-decoration-none"
+                  ><i class="fas fa-question-circle me-2 text-warning"></i>Guía
+                  de compra</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <h4 class="h4 mb-4 text-warning">REDES SOCIALES</h4>
+            <p class="text-white">
+              Síguenos para ofertas exclusivas y novedades tecnológicas.
+            </p>
+
+            <div class="social-links d-flex gap-3 mt-4">
+              <a
+                href="#"
+                class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                style="width: 40px; height: 40px"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                style="width: 40px; height: 40px"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                href="#"
+                class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                style="width: 40px; height: 40px"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a
+                href="#"
+                class="social-icon rounded-circle d-flex align-items-center justify-content-center text-white text-decoration-none bg-secondary"
+                style="width: 40px; height: 40px"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+
+            <div class="newsletter mt-4">
+              <h6 class="h6 mb-3">Suscríbete a nuestro boletín</h6>
+              <form class="d-flex">
+                <input
+                  type="email"
+                  class="form-control rounded-0 rounded-start"
+                  placeholder="Tu email"
+                  required
+                />
+                <button
+                  type="submit"
+                  class="btn btn-warning text-white rounded-0 rounded-end"
+                >
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4 bg-secondary" />
+
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <span class="text-warning">INMY STORE</span> - Todos los
+            derechos reservados
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <div class="payment-methods">
+              <i class="fab fa-cc-visa mx-2 text-white"></i>
+              <i class="fab fa-cc-mastercard mx-2 text-white"></i>
+              <i class="fab fa-cc-paypal mx-2 text-white"></i>
+              <i class="fab fa-cc-amex mx-2 text-white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap 5 JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      xintegrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"
+      xintegrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+/* Archivo: style.css */
+
+/* Animación para el texto con clase "blink" */
+.blink {
+  animation: blink-animation 1.5s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Logo personalizado */
+#logo span.text-warning {
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+/* Estilo para links en el navbar superior */
+.top-navbar .other-link a {
+  transition: color 0.3s ease;
+}
+
+.top-navbar .other-link a:hover {
+  color: #ffc107; /* Amarillo Bootstrap */
+}
+
+/* Botón Ingresar login */
+.btn-primary {
+  background-color: #0069d9;
+  border-color: #0062cc;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 8px rgba(0, 86, 179, 0.6);
+}
+
+/* Input campos login */
+input.form-control {
+  border-radius: 0.375rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 5px #ffc107;
+  outline: none;
+}
+
+/* Footer personalizado */
+#footer {
+  font-size: 0.9rem;
+}
+
+#footer a {
+  transition: color 0.3s ease;
+}
+
+#footer a:hover {
+  color: #ffc107;
+}
+
+.social-icon {
+  transition: background-color 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+  text-decoration: none;
+  box-shadow: 0 0 10px #ffc107;
+}
+
+/* Newsletter input y botón */
+.newsletter input.form-control {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.newsletter button.btn {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Ajustes responsive pequeños */
+@media (max-width: 576px) {
+  .top-navbar p.blink {
+    font-size: 0.8rem;
+  }
+
+  #footer .social-icon {
+    width: 35px;
+    height: 35px;
+  }
+}
